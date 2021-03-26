@@ -1,54 +1,54 @@
 const db = require('../models');
 
 const index = (req, res) => {
-	db.Player.find({ userId: req.params.userId }, (err, allPlayers) => {
+	db.Group.find({ userId: req.params.userId }, (err, allGroups) => {
 		if (err) return err;
 		// Send back data as JSON object
-		return res.json(allPlayers);
+		return res.json(allGroups);
 	});
 };
 
 const show = (req, res) => {
-	db.Player.findById(req.params.id, (err, foundPlayer) => {
+	db.Group.findById(req.params.id, (err, foundGroup) => {
 		if (err) return err;
 		// Send back data to client as JSON object
-		return res.json(foundPlayer);
+		return res.json(foundGroup);
 	});
 };
 
 const create = (req, res) => {
-	db.Player.create(req.body, (err, newPlayer) => {
+	db.Group.create(req.body, (err, newGroup) => {
 		if (err) return err;
 		db.User.findByIdAndUpdate(
 			req.body.userId,
 			{
-				$push: { players: [newPlayer._id] },
+				$push: { Groups: [newGroup._id] },
 			},
 			{ new: true },
 			(err, updatedUser) => {
 				if (err) return err;
-				return res.json(newPlayer);
+				return res.json(newGroup);
 			}
 		);
 	});
 };
 
 const update = (req, res) => {
-	db.Player.findByIdAndUpdate(
+	db.Group.findByIdAndUpdate(
 		req.params.id,
 		req.body,
 		{ new: true },
-		(err, updatedPlayer) => {
+		(err, updatedGroup) => {
 			if (err) return err;
-			return res.json(updatedPlayer);
+			return res.json(updatedGroup);
 		}
 	);
 };
 
 const destroy = (req, res) => {
-	db.Player.findByIdAndDelete(req.params.id, (err, deletedPlayer) => {
+	db.Group.findByIdAndDelete(req.params.id, (err, deletedGroup) => {
 		if (err) return err;
-		return res.json(deletedPlayer);
+		return res.json(deletedGroup);
 	});
 };
 

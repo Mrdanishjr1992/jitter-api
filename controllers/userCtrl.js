@@ -3,14 +3,14 @@ const jwt = require('jsonwebtoken');
 const db = require('../models');
 
 async function create(req, res) {
-	const { username, password } = req.body;
+	const { email, password } = req.body;
 
-	if (!username || !password) {
+	if (!email || !password) {
 		return res.json({ status: 400, message: 'All Fields Are Required' });
 	}
 	// Asyc/Await Version
 	try {
-		const foundUser = await db.User.findOne({ username });
+		const foundUser = await db.User.findOne({ email });
 
 		if (foundUser) {
 			return res.json({
@@ -25,7 +25,7 @@ async function create(req, res) {
 		// Hash user plain text password
 		const hash = await bcrypt.hash(password, salt);
 
-		const newUser = await db.User.create({ username, password: hash });
+		const newUser = await db.User.create({ email, password: hash });
 
 		// Respond back to client
 		res.json(newUser);
