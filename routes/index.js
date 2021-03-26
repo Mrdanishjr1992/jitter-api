@@ -1,9 +1,6 @@
-var express = require('express');
-var router = express.Router();
-
-/* GET home page. */
-router.get('/', function(req, res, next) {
-  res.render('index', { title: 'Express' });
-});
-
-module.exports = router;
+module.exports = {
+	attack: require('./attack'),
+	player: require('./player'),
+	user: require('./user'),
+	map: require('./map'),
+};
