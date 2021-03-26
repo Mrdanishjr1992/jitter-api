@@ -1,6 +1,4 @@
 module.exports = {
-	attack: require('./attackCtrl.js'),
-	player: require('./playerCtrl'),
+	group: require('./groupCtrl'),
 	user: require('./userCtrl'),
-	map: require('./mapCtrl'),
 };

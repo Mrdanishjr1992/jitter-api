@@ -2,7 +2,7 @@ const mongoose = require('mongoose');
 
 const userSchema = new mongoose.Schema(
 	{
-		username: {
+		email: {
 			type: String,
 			required: true,
 			trim: true,
@@ -16,12 +16,86 @@ const userSchema = new mongoose.Schema(
 			minLength: 1,
 			maxLength: 200,
 		},
-		players: [
+		info: {
+			firstname: {
+				type: String,
+				trim: true,
+				minLength: 1,
+				maxLength: 200,
+			},
+			lastname: {
+				type: String,
+				trim: true,
+				minLength: 1,
+				maxLength: 200,
+			},
+			dob: {
+				type: String,
+				trim: true,
+				minLength: 1,
+				maxLength: 200,
+			},
+		},
+		friends: [
 			{
 				type: mongoose.Schema.Types.ObjectId,
-				ref: 'Player',
+				ref: 'User',
 			},
 		],
+		blocked: [
+			{
+				type: mongoose.Schema.Types.ObjectId,
+				ref: 'User',
+			},
+		],
+		groups: {
+			created: [
+				{
+					type: mongoose.Schema.Types.ObjectId,
+					ref: 'Group',
+				},
+			],
+			joined: [
+				{
+					type: mongoose.Schema.Types.ObjectId,
+					ref: 'Group',
+				},
+			],
+		},
+		chats: {
+			created: [
+				{
+					type: mongoose.Schema.Types.ObjectId,
+					ref: 'Chat',
+				},
+			],
+			invited: [
+				{
+					type: mongoose.Schema.Types.ObjectId,
+					ref: 'Chat',
+				},
+			],
+		},
+		messages: [
+			{
+				type: mongoose.Schema.Types.ObjectId,
+				ref: 'Message',
+			},
+		],
+		likes: {
+			groups: [
+				{
+					type: mongoose.Schema.Types.ObjectId,
+					ref: 'Group',
+				},
+			],
+			messages: [
+				{
+					type: mongoose.Schema.Types.ObjectId,
+					ref: 'Message',
+				},
+			],
+		},
 	},
 	{ timestamps: true }
 );
