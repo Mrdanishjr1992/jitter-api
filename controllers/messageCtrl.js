@@ -1,54 +1,54 @@
 const db = require('../models');
 
 const index = (req, res) => {
-	db.Group.find({}, (err, allGroups) => {
+	db.Message.find({}, (err, allMessages) => {
 		if (err) return err;
 		// Send back data as JSON object
-		return res.json(allGroups);
+		return res.json(allMessages);
 	});
 };
 
 const show = (req, res) => {
-	db.Group.findById(req.params.id, (err, foundGroup) => {
+	db.Message.findById(req.params.id, (err, foundMessage) => {
 		if (err) return err;
 		// Send back data to client as JSON object
-		return res.json(foundGroup);
+		return res.json(foundMessage);
 	});
 };
 
 const create = (req, res) => {
-	db.Group.create(req.body, (err, newGroup) => {
+	db.Message.create(req.body, (err, newMessage) => {
 		if (err) return err;
 		db.User.findByIdAndUpdate(
 			req.body.userId,
 			{
-				$push: { created: [newGroup._id] },
+				$push: { messages: [newMessage._id] },
 			},
 			{ new: true },
 			(err, updatedUser) => {
 				if (err) return err;
-				return res.json(newGroup);
+				return res.json(newMessage);
 			}
 		);
 	});
 };
 
 const update = (req, res) => {
-	db.Group.findByIdAndUpdate(
+	db.Message.findByIdAndUpdate(
 		req.params.id,
 		req.body,
 		{ new: true },
-		(err, updatedGroup) => {
+		(err, updatedMessage) => {
 			if (err) return err;
-			return res.json(updatedGroup);
+			return res.json(updatedMessage);
 		}
 	);
 };
 
 const destroy = (req, res) => {
-	db.Group.findByIdAndDelete(req.params.id, (err, deletedGroup) => {
+	db.Message.findByIdAndDelete(req.params.id, (err, deletedMessage) => {
 		if (err) return err;
-		return res.json(deletedGroup);
+		return res.json(deletedMessage);
 	});
 };
 

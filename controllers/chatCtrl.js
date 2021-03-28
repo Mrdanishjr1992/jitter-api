@@ -1,54 +1,54 @@
 const db = require('../models');
 
 const index = (req, res) => {
-	db.Group.find({}, (err, allGroups) => {
+	db.Chat.find({}, (err, allChats) => {
 		if (err) return err;
 		// Send back data as JSON object
-		return res.json(allGroups);
+		return res.json(allChats);
 	});
 };
 
 const show = (req, res) => {
-	db.Group.findById(req.params.id, (err, foundGroup) => {
+	db.Chat.findById(req.params.id, (err, foundChat) => {
 		if (err) return err;
 		// Send back data to client as JSON object
-		return res.json(foundGroup);
+		return res.json(foundChat);
 	});
 };
 
 const create = (req, res) => {
-	db.Group.create(req.body, (err, newGroup) => {
+	db.Chat.create(req.body, (err, newChat) => {
 		if (err) return err;
 		db.User.findByIdAndUpdate(
 			req.body.userId,
 			{
-				$push: { created: [newGroup._id] },
+				$push: { created: [newChat._id] },
 			},
 			{ new: true },
 			(err, updatedUser) => {
 				if (err) return err;
-				return res.json(newGroup);
+				return res.json(newChat);
 			}
 		);
 	});
 };
 
 const update = (req, res) => {
-	db.Group.findByIdAndUpdate(
+	db.Chat.findByIdAndUpdate(
 		req.params.id,
 		req.body,
 		{ new: true },
-		(err, updatedGroup) => {
+		(err, updatedChat) => {
 			if (err) return err;
-			return res.json(updatedGroup);
+			return res.json(updatedChat);
 		}
 	);
 };
 
 const destroy = (req, res) => {
-	db.Group.findByIdAndDelete(req.params.id, (err, deletedGroup) => {
+	db.Chat.findByIdAndDelete(req.params.id, (err, deletedChat) => {
 		if (err) return err;
-		return res.json(deletedGroup);
+		return res.json(deletedChat);
 	});
 };
 

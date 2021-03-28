@@ -3,7 +3,7 @@ const controllers = require('../controllers');
 const auth = require('../middleware/auth');
 
 // Chat Index
-router.get('/index', controllers.chat.show);
+router.get('/index', controllers.chat.index);
 
 // Chat Create
 router.post('/', controllers.chat.create);
