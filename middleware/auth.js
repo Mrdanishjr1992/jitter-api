@@ -18,7 +18,7 @@ async function auth(req, res, next) {
 		next();
 	} catch (err) {
 		return res
-			.satus(500)
+			.status(500)
 			.json({ status: 500, error: 'Something went wrong. Please try again' });
 	}
 }

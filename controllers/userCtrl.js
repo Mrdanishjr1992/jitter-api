@@ -1,6 +1,6 @@
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
-const db = require('../models');
+const db = require('../models/index');
 
 async function create(req, res) {
 	const { email, password } = req.body;
@@ -8,7 +8,7 @@ async function create(req, res) {
 	if (!email || !password) {
 		return res.json({ status: 400, message: 'All Fields Are Required' });
 	}
-	// Asyc/Await Version
+	// Async/Await Version
 	try {
 		const foundUser = await db.User.findOne({ email });
 
@@ -21,9 +21,9 @@ async function create(req, res) {
 
 		// Create Salt for password hash
 		const salt = await bcrypt.genSalt(10);
-
 		// Hash user plain text password
 		const hash = await bcrypt.hash(password, salt);
+		console.log(salt, hash);
 
 		const newUser = await db.User.create({ email, password: hash });
 
