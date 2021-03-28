@@ -1,5 +1,6 @@
 module.exports = {
-	Group: require('./Group'),
 	Chat: require('./Chat'),
+	Group: require('./Group'),
+	Message: require('./Message'),
 	User: require('./User'),
 };
