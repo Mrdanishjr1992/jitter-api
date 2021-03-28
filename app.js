@@ -17,7 +17,13 @@ app.use(cors());
 app.get('/', (req, res) => {
 	res.send('<h1>Jitter</h1>');
 });
-// User API Routes
+// Chat Route
+app.use('/chat', routes.chat);
+// Group Route
+app.use('/group', routes.group);
+// Mesaage Route
+app.use('/message', routes.message);
+// User Route
 app.use('/user', routes.user);
 
 // catch 404 and forward to error handler
