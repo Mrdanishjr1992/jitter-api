@@ -1,13 +1,13 @@
 require('dotenv').config();
 const cors = require('cors');
-const createError = require('http-errors');
+const bodyParser = require('body-parser');
 const express = require('express');
-const logger = require('morgan');
-const routes = require('./routes');
 const app = express();
+const PORT = process.env.PORT || 4000;
+const routes = require('./routes');
 
 // Middleware
-app.use(logger('dev'));
+app.use(bodyParser.json());
 app.use(express.json());
 
 // Cross Origin Resource Sharing
@@ -26,9 +26,4 @@ app.use('/message', routes.message);
 // User Route
 app.use('/user', routes.user);
 
-// catch 404 and forward to error handler
-app.use(function (req, res, next) {
-	next(createError(404));
-});
-
-module.exports = app;
+app.listen(PORT, () => console.log('connected to port ' + PORT));
