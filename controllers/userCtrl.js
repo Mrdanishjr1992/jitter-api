@@ -23,7 +23,6 @@ async function create(req, res) {
 		const salt = await bcrypt.genSalt(10);
 		// Hash user plain text password
 		const hash = await bcrypt.hash(password, salt);
-		console.log(salt, hash);
 
 		const newUser = await db.User.create({ email, password: hash });
 
