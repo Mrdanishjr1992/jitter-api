@@ -16,13 +16,11 @@ const chatSchema = new mongoose.Schema(
 			minLength: 1,
 			maxLength: 200,
 		},
-		admin: [
-			{
-				type: mongoose.Schema.Types.ObjectId,
-				ref: 'User',
-				required: true,
-			},
-		],
+		admin: {
+			type: mongoose.Schema.Types.ObjectId,
+			ref: 'User',
+			required: true,
+		},
 		participants: [
 			{
 				type: mongoose.Schema.Types.ObjectId,

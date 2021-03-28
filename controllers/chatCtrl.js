@@ -22,7 +22,7 @@ const create = (req, res) => {
 		db.User.findByIdAndUpdate(
 			req.body.userId,
 			{
-				$push: { created: [newChat._id] },
+				$push: { chats: { created: [newChat._id] } },
 			},
 			{ new: true },
 			(err, updatedUser) => {
@@ -40,7 +40,17 @@ const update = (req, res) => {
 		{ new: true },
 		(err, updatedChat) => {
 			if (err) return err;
-			return res.json(updatedChat);
+			db.User.findByIdAndUpdate(
+				req.body.userId,
+				{
+					$push: { chats: { created: [updatedChat._id] } },
+				},
+				{ new: true },
+				(err, updatedUser) => {
+					if (err) return err;
+					return res.json(updatedChat);
+				}
+			);
 		}
 	);
 };
@@ -48,7 +58,17 @@ const update = (req, res) => {
 const destroy = (req, res) => {
 	db.Chat.findByIdAndDelete(req.params.id, (err, deletedChat) => {
 		if (err) return err;
-		return res.json(deletedChat);
+		db.User.findByIdAndUpdate(
+			req.body.userId,
+			{
+				$pull: { chats: { created: [deletedChat._id] } },
+			},
+			{ new: true },
+			(err, updatedUser) => {
+				if (err) return err;
+				return res.json(deletedChat);
+			}
+		);
 	});
 };
 
