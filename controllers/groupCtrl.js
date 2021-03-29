@@ -22,7 +22,7 @@ const create = (req, res) => {
 		db.User.findByIdAndUpdate(
 			req.body.user,
 			{
-				$push: { groups: [newGroup._id] },
+				$push: { groups: newGroup._id },
 			},
 			{ new: true },
 			(err, updatedUser) => {
@@ -51,7 +51,7 @@ const destroy = (req, res) => {
 		db.User.findByIdAndUpdate(
 			req.body.user,
 			{
-				$pull: { groups: [deletedGroup._id] },
+				$pull: { groups: deletedGroup._id },
 			},
 			{ new: true },
 			(err, updatedUser) => {

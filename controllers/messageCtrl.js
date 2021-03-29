@@ -22,7 +22,7 @@ const create = (req, res) => {
 		db.User.findByIdAndUpdate(
 			req.body.user,
 			{
-				$push: { messages: [newMessage._id] },
+				$push: { messages: newMessage._id },
 			},
 			{ new: true },
 			(err, updatedUser) => {
@@ -31,7 +31,7 @@ const create = (req, res) => {
 					db.Group.findByIdAndUpdate(
 						req.body.user,
 						{
-							$push: { messages: [newMessage._id] },
+							$push: { messages: newMessage._id },
 						},
 						{ new: true },
 						(err, updatedGroup) => {
@@ -43,7 +43,7 @@ const create = (req, res) => {
 					db.Chat.findByIdAndUpdate(
 						req.body.user,
 						{
-							$push: { messages: [newMessage._id] },
+							$push: { messages: newMessage._id },
 						},
 						{ new: true },
 						(err, updatedChat) => {
@@ -75,7 +75,7 @@ const destroy = (req, res) => {
 		db.User.findByIdAndUpdate(
 			req.body.user,
 			{
-				$pull: { messages: [deletedMessage._id] },
+				$pull: { messages: deletedMessage._id },
 			},
 			{ new: true },
 			(err, updatedUser) => {
@@ -84,7 +84,7 @@ const destroy = (req, res) => {
 					db.Group.findByIdAndUpdate(
 						req.body.user,
 						{
-							$pull: { messages: [deletedMessage._id] },
+							$pull: { messages: deletedMessage._id },
 						},
 						{ new: true },
 						(err, updatedGroup) => {
@@ -96,7 +96,7 @@ const destroy = (req, res) => {
 					db.Chat.findByIdAndUpdate(
 						req.body.user,
 						{
-							$pull: { messages: [deletedMessage._id] },
+							$pull: { messages: deletedMessage._id },
 						},
 						{ new: true },
 						(err, updatedChat) => {
