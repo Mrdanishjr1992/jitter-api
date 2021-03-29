@@ -29,7 +29,7 @@ const create = (req, res) => {
 				if (err) return err;
 				if (req.body.type.group) {
 					db.Group.findByIdAndUpdate(
-						req.body.user,
+						req.body.type.group,
 						{
 							$push: { messages: newMessage._id },
 						},
@@ -41,7 +41,7 @@ const create = (req, res) => {
 					);
 				} else if (req.body.type.chat) {
 					db.Chat.findByIdAndUpdate(
-						req.body.user,
+						req.body.type.chat,
 						{
 							$push: { messages: newMessage._id },
 						},
@@ -82,7 +82,7 @@ const destroy = (req, res) => {
 				if (err) return err;
 				if (req.body.type.group) {
 					db.Group.findByIdAndUpdate(
-						req.body.user,
+						req.body.type.group,
 						{
 							$pull: { messages: deletedMessage._id },
 						},
@@ -94,7 +94,7 @@ const destroy = (req, res) => {
 					);
 				} else if (req.body.type.chat) {
 					db.Chat.findByIdAndUpdate(
-						req.body.user,
+						req.body.type.chat,
 						{
 							$pull: { messages: deletedMessage._id },
 						},
