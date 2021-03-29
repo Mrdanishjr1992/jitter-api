@@ -20,7 +20,7 @@ const create = (req, res) => {
 	db.Chat.create(req.body, (err, newChat) => {
 		if (err) return err;
 		db.User.findByIdAndUpdate(
-			req.body.userId,
+			req.body.user,
 			{
 				$push: { chats: [newChat._id] },
 			},
@@ -49,7 +49,7 @@ const destroy = (req, res) => {
 	db.Chat.findByIdAndDelete(req.params.id, (err, deletedChat) => {
 		if (err) return err;
 		db.User.findByIdAndUpdate(
-			req.body.userId,
+			req.body.user,
 			{
 				$pull: { chats: [deletedChat._id] },
 			},

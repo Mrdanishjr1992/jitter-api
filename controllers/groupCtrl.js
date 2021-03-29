@@ -20,7 +20,7 @@ const create = (req, res) => {
 	db.Group.create(req.body, (err, newGroup) => {
 		if (err) return err;
 		db.User.findByIdAndUpdate(
-			req.body.userId,
+			req.body.user,
 			{
 				$push: { groups: [newGroup._id] },
 			},
@@ -49,7 +49,7 @@ const destroy = (req, res) => {
 	db.Group.findByIdAndDelete(req.params.id, (err, deletedGroup) => {
 		if (err) return err;
 		db.User.findByIdAndUpdate(
-			req.body.userId,
+			req.body.user,
 			{
 				$pull: { groups: [deletedGroup._id] },
 			},
