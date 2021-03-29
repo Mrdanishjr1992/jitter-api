@@ -13,15 +13,13 @@ const messageSchema = new mongoose.Schema(
 			ref: 'User',
 			required: true,
 		},
-		type: {
-			group: {
-				type: mongoose.Schema.Types.ObjectId,
-				ref: 'Group',
-			},
-			chat: {
-				type: mongoose.Schema.Types.ObjectId,
-				ref: 'Chat',
-			},
+		group: {
+			type: mongoose.Schema.Types.ObjectId,
+			ref: 'Group',
+		},
+		chat: {
+			type: mongoose.Schema.Types.ObjectId,
+			ref: 'Chat',
 		},
 	},
 	{ timestamps: true }

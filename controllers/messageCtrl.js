@@ -27,9 +27,9 @@ const create = (req, res) => {
 			{ new: true },
 			(err, updatedUser) => {
 				if (err) return err;
-				if (req.body.type.group) {
+				if (req.body.group) {
 					db.Group.findByIdAndUpdate(
-						req.body.type.group,
+						req.body.group,
 						{
 							$push: { messages: newMessage._id },
 						},
@@ -39,9 +39,9 @@ const create = (req, res) => {
 							return res.json(newMessage);
 						}
 					);
-				} else if (req.body.type.chat) {
+				} else if (req.body.chat) {
 					db.Chat.findByIdAndUpdate(
-						req.body.type.chat,
+						req.body.chat,
 						{
 							$push: { messages: newMessage._id },
 						},
@@ -80,9 +80,9 @@ const destroy = (req, res) => {
 			{ new: true },
 			(err, updatedUser) => {
 				if (err) return err;
-				if (req.body.type.group) {
+				if (req.body.group) {
 					db.Group.findByIdAndUpdate(
-						req.body.type.group,
+						req.body.group,
 						{
 							$pull: { messages: deletedMessage._id },
 						},
@@ -92,9 +92,9 @@ const destroy = (req, res) => {
 							return res.json(deletedMessage);
 						}
 					);
-				} else if (req.body.type.chat) {
+				} else if (req.body.chat) {
 					db.Chat.findByIdAndUpdate(
-						req.body.type.chat,
+						req.body.chat,
 						{
 							$pull: { messages: deletedMessage._id },
 						},
