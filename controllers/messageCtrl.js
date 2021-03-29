@@ -27,33 +27,33 @@ const create = (req, res) => {
 			{ new: true },
 			(err, updatedUser) => {
 				if (err) return err;
+				if (req.body.type.group) {
+					db.Group.findByIdAndUpdate(
+						req.body.user,
+						{
+							$push: { messages: [newMessage._id] },
+						},
+						{ new: true },
+						(err, updatedGroup) => {
+							if (err) return err;
+							return res.json(newMessage);
+						}
+					);
+				} else if (req.body.type.chat) {
+					db.Chat.findByIdAndUpdate(
+						req.body.user,
+						{
+							$push: { messages: [newMessage._id] },
+						},
+						{ new: true },
+						(err, updatedChat) => {
+							if (err) return err;
+							return res.json(newMessage);
+						}
+					);
+				}
 			}
 		);
-		if (req.body.type.group) {
-			db.Group.findByIdAndUpdate(
-				req.body.user,
-				{
-					$push: { messages: [newMessage._id] },
-				},
-				{ new: true },
-				(err, updatedGroup) => {
-					if (err) return err;
-					return res.json(newMessage);
-				}
-			);
-		} else if (req.body.type.chat) {
-			db.Chat.findByIdAndUpdate(
-				req.body.user,
-				{
-					$push: { messages: [newMessage._id] },
-				},
-				{ new: true },
-				(err, updatedChat) => {
-					if (err) return err;
-					return res.json(newMessage);
-				}
-			);
-		}
 	});
 };
 
@@ -80,33 +80,33 @@ const destroy = (req, res) => {
 			{ new: true },
 			(err, updatedUser) => {
 				if (err) return err;
+				if (req.body.type.group) {
+					db.Group.findByIdAndUpdate(
+						req.body.user,
+						{
+							$pull: { messages: [deletedMessage._id] },
+						},
+						{ new: true },
+						(err, updatedGroup) => {
+							if (err) return err;
+							return res.json(deletedMessage);
+						}
+					);
+				} else if (req.body.type.chat) {
+					db.Chat.findByIdAndUpdate(
+						req.body.user,
+						{
+							$pull: { messages: [deletedMessage._id] },
+						},
+						{ new: true },
+						(err, updatedChat) => {
+							if (err) return err;
+							return res.json(deletedMessage);
+						}
+					);
+				}
 			}
 		);
-		if (req.body.type.group) {
-			db.Group.findByIdAndUpdate(
-				req.body.user,
-				{
-					$pull: { messages: [deletedMessage._id] },
-				},
-				{ new: true },
-				(err, updatedGroup) => {
-					if (err) return err;
-					return res.json(deletedMessage);
-				}
-			);
-		} else if (req.body.type.chat) {
-			db.Chat.findByIdAndUpdate(
-				req.body.user,
-				{
-					$pull: { messages: [deletedMessage._id] },
-				},
-				{ new: true },
-				(err, updatedChat) => {
-					if (err) return err;
-					return res.json(deletedMessage);
-				}
-			);
-		}
 		return res.json(deletedMessage);
 	});
 };
