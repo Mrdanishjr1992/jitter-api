@@ -27,9 +27,33 @@ const create = (req, res) => {
 			{ new: true },
 			(err, updatedUser) => {
 				if (err) return err;
-				return res.json(newMessage);
 			}
 		);
+		if (req.body.type.group) {
+			db.Group.findByIdAndUpdate(
+				req.body.userId,
+				{
+					$push: { messages: [newMessage._id] },
+				},
+				{ new: true },
+				(err, updatedGroup) => {
+					if (err) return err;
+					return res.json(newMessage);
+				}
+			);
+		} else if (req.body.type.chat) {
+			db.Chat.findByIdAndUpdate(
+				req.body.userId,
+				{
+					$push: { messages: [newMessage._id] },
+				},
+				{ new: true },
+				(err, updatedChat) => {
+					if (err) return err;
+					return res.json(newMessage);
+				}
+			);
+		}
 	});
 };
 
@@ -48,6 +72,41 @@ const update = (req, res) => {
 const destroy = (req, res) => {
 	db.Message.findByIdAndDelete(req.params.id, (err, deletedMessage) => {
 		if (err) return err;
+		db.User.findByIdAndUpdate(
+			req.body.userId,
+			{
+				$pull: { messages: [deletedMessage._id] },
+			},
+			{ new: true },
+			(err, updatedUser) => {
+				if (err) return err;
+			}
+		);
+		if (req.body.type.group) {
+			db.Group.findByIdAndUpdate(
+				req.body.userId,
+				{
+					$pull: { messages: [deletedMessage._id] },
+				},
+				{ new: true },
+				(err, updatedGroup) => {
+					if (err) return err;
+					return res.json(deletedMessage);
+				}
+			);
+		} else if (req.body.type.chat) {
+			db.Chat.findByIdAndUpdate(
+				req.body.userId,
+				{
+					$pull: { messages: [deletedMessage._id] },
+				},
+				{ new: true },
+				(err, updatedChat) => {
+					if (err) return err;
+					return res.json(deletedMessage);
+				}
+			);
+		}
 		return res.json(deletedMessage);
 	});
 };

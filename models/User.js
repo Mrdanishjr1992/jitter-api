@@ -48,34 +48,18 @@ const userSchema = new mongoose.Schema(
 				ref: 'User',
 			},
 		],
-		groups: {
-			created: [
-				{
-					type: mongoose.Schema.Types.ObjectId,
-					ref: 'Group',
-				},
-			],
-			joined: [
-				{
-					type: mongoose.Schema.Types.ObjectId,
-					ref: 'Group',
-				},
-			],
-		},
-		chats: {
-			created: [
-				{
-					type: mongoose.Schema.Types.ObjectId,
-					ref: 'Chat',
-				},
-			],
-			invited: [
-				{
-					type: mongoose.Schema.Types.ObjectId,
-					ref: 'Chat',
-				},
-			],
-		},
+		groups: [
+			{
+				type: mongoose.Schema.Types.ObjectId,
+				ref: 'Group',
+			},
+		],
+		chats: [
+			{
+				type: mongoose.Schema.Types.ObjectId,
+				ref: 'Chat',
+			},
+		],
 		messages: [
 			{
 				type: mongoose.Schema.Types.ObjectId,
