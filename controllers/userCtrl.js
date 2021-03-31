@@ -50,9 +50,9 @@ async function show(req, res) {
 }
 
 async function login(req, res) {
-	const { username, password } = req.body;
+	const { email, password } = req.body;
 	// Return error if no form data
-	if (!username || !password) {
+	if (!email || !password) {
 		return res
 			.status(400)
 			.json({ status: 400, error: 'All fields are required' });
@@ -60,7 +60,7 @@ async function login(req, res) {
 
 	try {
 		// Find user by email
-		const user = await db.User.findOne({ username });
+		const user = await db.User.findOne({ email });
 		if (!user) {
 			res
 				.status(400)
