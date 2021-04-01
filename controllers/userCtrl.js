@@ -108,9 +108,15 @@ const update = (req, res) => {
 };
 
 const destroy = (req, res) => {
-	db.User.findByIdAndDelete(req.currentUserId, (err, deletedUser) => {
-		return res.json({ status: 200, profile: deletedUser });
-	});
+	try {
+		db.User.findByIdAndDelete(req.currentUserId, (err, deletedUser) => {
+			return res.json({ status: 200, profile: deletedUser });
+		});
+	} catch (err) {
+		return res
+			.status(500)
+			.json({ status: 500, error: 'Something went wrong. Please try again' });
+	}
 };
 
 async function verify(req, res) {

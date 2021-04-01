@@ -7,8 +7,11 @@ const PORT = process.env.PORT || 4000;
 const routes = require('./routes');
 
 // Middleware
-app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: false }));
 app.use(express.json());
+app.use((req, res, next) => {
+	next();
+});
 
 // Cross Origin Resource Sharing
 app.use(cors());
